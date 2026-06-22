@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/huahuajhu/agentic-contribution-kit/schemas/eval-result.schema.json",
+  "title": "EvalResult",
+  "type": "object",
+  "required": ["repo", "change", "claim", "decision", "signals"],
+  "properties": {
+    "repo": {
+      "type": "string",
+      "pattern": "^[^/]+/[^/]+$"
+    },
+    "change": {
+      "type": "string"
+    },
+    "claim": {
+      "type": "string"
+    },
+    "subsystem": {
+      "type": "string"
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["pass", "neutral", "fail", "inconclusive"]
+    },
+    "signals": {
+      "type": "object",
+      "properties": {
+        "correctness": { "type": "string" },
+        "latency": { "type": "string" },
+        "throughput": { "type": "string" },
+        "memory": { "type": "string" },
+        "quality": { "type": "string" },
+        "operability": { "type": "string" },
+        "maintainerFit": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "baseline": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/measurement" }
+    },
+    "candidate": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/measurement" }
+    },
+    "regressionRisks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "followUp": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "measurement": {
+      "type": "object",
+      "required": ["name", "result"],
+      "properties": {
+        "name": { "type": "string" },
+        "command": { "type": "string" },
+        "result": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
