@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/huahuajhu/agentic-contribution-kit/schemas/contribution-packet.schema.json",
+  "title": "ContributionPacket",
+  "type": "object",
+  "required": ["date", "repo", "packetType", "status", "summary", "validation"],
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "repo": {
+      "type": "string",
+      "pattern": "^[^/]+/[^/]+$"
+    },
+    "issueUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "prUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "packetType": {
+      "type": "string",
+      "enum": [
+        "pr-submitted",
+        "pr-ready-branch",
+        "issue-repro",
+        "review-comment",
+        "no-go"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "open", "review-ready", "merged", "closed", "no-go"]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "systemSurface": {
+      "type": "string"
+    },
+    "filesRead": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "filesChanged": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "validation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["commandOrEvidence", "result"],
+        "properties": {
+          "commandOrEvidence": { "type": "string" },
+          "result": { "type": "string" },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "reviewState": {
+      "type": "string"
+    },
+    "publicStory": {
+      "type": "string"
+    },
+    "nextFollowUp": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
